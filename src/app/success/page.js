@@ -34,7 +34,7 @@ async function getPaidOrder(sessionId) {
 }
 
 const buttonClass =
-  "btn mt-8";
+  "inline-block mt-8 bg-ink text-cream rounded-full px-6 py-3 font-semibold transition-all duration-200 hover:opacity-85 active:scale-95";
 
 export default async function SuccessPage({ searchParams }) {
   const { session_id: sessionId } = await searchParams;
@@ -64,7 +64,7 @@ export default async function SuccessPage({ searchParams }) {
     <div className="mx-auto max-w-lg px-5 py-24">
       <ClearCartOnLoad />
       <div className="text-center">
-        <p className="eyebrow">
+        <p className="text-teal text-xs font-semibold uppercase tracking-widest">
           Pre-order confirmed
         </p>
         <h1 className="text-3xl font-bold mt-3">You&apos;re one of the first.</h1>

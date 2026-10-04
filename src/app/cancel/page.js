@@ -14,7 +14,7 @@ export default function CancelPage() {
       </p>
       <Link
         href="/"
-        className="btn mt-8"
+        className="inline-block mt-8 bg-ink text-cream rounded-full px-6 py-3 font-semibold"
       >
         Back to shop
       </Link>

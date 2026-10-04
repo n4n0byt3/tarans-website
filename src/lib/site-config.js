@@ -26,8 +26,6 @@ export const siteConfig = {
   tagline: "Grooming shouldn't feel like another job.",
   // The philosophy, in five words.
   description: "Simple rituals. Better results. Less effort.",
-  // The line under the logo.
-  motto: "Simple grooming. Better presence.",
   guaranteeDays: 30,
   supportEmail: "hello@azadblack.co.uk",
 

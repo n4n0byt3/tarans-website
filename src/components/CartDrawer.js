@@ -130,7 +130,7 @@ export default function CartDrawer() {
             <div className="text-sm">
               <p className="text-ink/60">Your basket is empty.</p>
               <Link
-                href="/beard-oil#first-drop"
+                href="/#shop"
                 onClick={closeCart}
                 className="inline-block mt-3 text-teal hover:underline underline-offset-4"
               >
@@ -177,7 +177,7 @@ export default function CartDrawer() {
               </p>
               <button
                 onClick={applySuggestion}
-                className="btn mt-3 w-full py-2! text-sm"
+                className="mt-3 w-full bg-teal text-cream rounded-full py-2 text-sm font-semibold transition-all duration-200 hover:opacity-90 active:scale-95"
               >
                 Swap & save {formatPrice(suggestion.saveCents)}
               </button>
@@ -234,7 +234,7 @@ export default function CartDrawer() {
             ref={checkoutButtonRef}
             disabled={!hasItems || loading}
             onClick={handleCheckout}
-            className="btn w-full"
+            className="w-full bg-ink text-cream rounded-full py-3 font-semibold disabled:opacity-40 transition-all duration-200 hover:opacity-85 active:scale-95"
           >
             {loading ? "Redirecting…" : "Pre-order securely"}
           </button>

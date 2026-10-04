@@ -1,13 +1,11 @@
 import { siteConfig } from "./site-config";
-import { products, oilDescription, BOTTLE_SIZE } from "./products";
+import { products, BOTTLE_SIZE } from "./products";
 import { formatPrice } from "./format";
 
 // Everything here describes the shop to machines — search engines through
 // schema.org structured data, AI assistants through /llms.txt. It is built
 // from the same catalogue and config the pages render, so a price or policy
 // change can't leave a stale copy behind.
-
-export const PRODUCT_PATH = "/beard-oil";
 
 const absolute = (path) => `${siteConfig.url}${path}`;
 const money = (cents) => (cents / 100).toFixed(2);
@@ -26,11 +24,16 @@ export function siteDescription() {
   );
 }
 
-export function productDescription() {
-  return (
-    `Pre-order ${siteConfig.brandName} beard oil (${BOTTLE_SIZE}): softens coarse hair, calms itch, ` +
-    `thirty seconds a day. From ${formatPrice(lowestPriceCents())}. Cancel any time before it ships.`
-  );
+export function productPath(product) {
+  return `/products/${product.slug}`;
+}
+
+export function productDescription(product) {
+  const what =
+    product.bottles === 1
+      ? `Pre-order a ${BOTTLE_SIZE} bottle of ${siteConfig.brandName} beard oil for ${formatPrice(product.priceCents)}.`
+      : `Pre-order ${product.bottles} x ${BOTTLE_SIZE} bottles of ${siteConfig.brandName} beard oil for ${formatPrice(product.priceCents)}, ${formatPrice(Math.round(product.priceCents / product.bottles))} a bottle.`;
+  return `${what} Softens coarse hair and calms itch. Cancel any time before it ships.`;
 }
 
 function shippingDetails() {
@@ -72,40 +75,39 @@ function returnPolicy() {
   };
 }
 
-// One product (the oil) with an offer per pack size.
-export function productSchema() {
+export function productSchema(product) {
   return {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: `${siteConfig.brandName} Beard Oil`,
-    description: oilDescription,
+    name: `${siteConfig.brandName} Beard Oil — ${product.name}`,
+    description: product.description,
+    sku: product.slug,
     category: "Health & Beauty > Personal Care > Shaving & Grooming > Beard Oil",
-    image: products.map((p) => absolute(p.image)),
+    image: absolute(product.image),
     brand: { "@type": "Brand", name: siteConfig.brandName },
-    size: BOTTLE_SIZE,
-    offers: products.map((p) => ({
+    size: product.scent,
+    offers: {
       "@type": "Offer",
-      name: p.name,
-      sku: p.slug,
-      url: absolute(PRODUCT_PATH),
+      url: absolute(productPath(product)),
       priceCurrency: currency,
-      price: money(p.priceCents),
+      price: money(product.priceCents),
       availability: "https://schema.org/PreOrder",
       itemCondition: "https://schema.org/NewCondition",
       seller: { "@type": "Organization", name: siteConfig.brandName },
       shippingDetails: shippingDetails(),
       hasMerchantReturnPolicy: returnPolicy(),
-    })),
+    },
   };
 }
 
-export function breadcrumbSchema() {
+export function breadcrumbSchema(product) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
-      { "@type": "ListItem", position: 2, name: "Beard oil", item: absolute(PRODUCT_PATH) },
+      { "@type": "ListItem", position: 2, name: "Beard oil", item: absolute("/#shop") },
+      { "@type": "ListItem", position: 3, name: product.name, item: absolute(productPath(product)) },
     ],
   };
 }

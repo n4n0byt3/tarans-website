@@ -8,22 +8,22 @@ const W = 1200;
 const H = 630;
 
 const hero = await sharp("public/hero.png").resize({ height: H }).toBuffer();
-const logo = await sharp("public/brand/logo.png").resize({ height: 56 }).toBuffer();
 const heroMeta = await sharp(hero).metadata();
+const logo = await sharp("public/brand/logo.png").resize({ height: 56 }).toBuffer();
 
 const text = Buffer.from(`
 <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
-  <g font-family="Helvetica, Arial, sans-serif" fill="#e8e6e3">
-    <text x="64" y="200" font-size="20" letter-spacing="6" fill="#c98a5c" font-weight="700">PRE-ORDERS OPEN</text>
+  <g font-family="Helvetica, Arial, sans-serif" fill="#efe8e0">
+    <text x="64" y="200" font-size="22" letter-spacing="6" fill="#e2a582" font-weight="700">PRE-ORDERS OPEN</text>
     <text x="64" y="275" font-size="52" font-weight="700">Grooming</text>
     <text x="64" y="340" font-size="52" font-weight="700">shouldn't feel like</text>
-    <text x="64" y="405" font-size="52" font-weight="700" fill-opacity="0.45">another job.</text>
+    <text x="64" y="405" font-size="52" font-weight="700">another job.</text>
     <text x="64" y="475" font-size="26" fill-opacity="0.7">Starting with beard oil.</text>
   </g>
 </svg>`);
 
 await sharp({
-  create: { width: W, height: H, channels: 4, background: "#0b0b0c" },
+  create: { width: W, height: H, channels: 4, background: "#16130f" },
 })
   .composite([
     { input: hero, left: W - heroMeta.width, top: 0 },

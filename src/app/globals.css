@@ -1,18 +1,15 @@
 @import "tailwindcss";
 
-/* Near-black with one accent: the copper of the "BLACK" in the logo. The
-   token names are historical (teal is the accent, navy the raised surface);
-   the values are what matter. */
 :root {
-  --background: #0b0b0c;
-  --foreground: #e8e6e3;
-  --color-ink: #e8e6e3;
-  --color-navy: #131315;
-  --color-peach: #0f0f11;
-  --color-peach-light: #18181b;
-  --color-teal: #c98a5c;
-  --color-teal-dark: #a96d43;
-  --color-cream: #0b0b0c;
+  --background: #16130f;
+  --foreground: #efe8e0;
+  --color-ink: #efe8e0;
+  --color-navy: #221d18;
+  --color-peach: #1c1712;
+  --color-peach-light: #251f19;
+  --color-teal: #e2a582;
+  --color-teal-dark: #c98a63;
+  --color-cream: #16130f;
 }
 
 @theme inline {
@@ -33,59 +30,6 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
-}
-
-/* The handful of building blocks every section is made from. Using these
-   rather than one-off class lists is what keeps the pages looking like one
-   brand. */
-@layer components {
-  /* Small copper label above a heading. */
-  .eyebrow {
-    @apply text-teal text-[11px] font-semibold uppercase tracking-[0.25em];
-  }
-
-  /* Section heading. Wrap a second line in <span class="heading-muted"> for
-     the two-tone look. */
-  .heading {
-    @apply text-[2rem] leading-[1.08] sm:text-5xl font-bold tracking-tight text-ink text-balance;
-  }
-
-  .heading-muted {
-    @apply text-ink/40;
-  }
-
-  .lede {
-    @apply text-ink/65 text-base sm:text-lg leading-relaxed text-pretty;
-  }
-
-  /* The one button style. Dark, with a copper edge that warms on hover. */
-  .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-teal/45 px-7 py-3.5 text-[15px] font-semibold text-ink transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
-    background: linear-gradient(180deg, #221c17 0%, #141210 100%);
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 8px 24px -12px rgb(201 138 92 / 0.35);
-  }
-
-  .btn:hover {
-    @apply border-teal/80;
-  }
-
-  /* Secondary action: just text. */
-  .btn-text {
-    @apply inline-flex items-center justify-center gap-1.5 px-4 py-3 text-[15px] font-medium text-ink/70 transition-colors hover:text-ink;
-  }
-
-  /* Bordered panel. */
-  .card {
-    @apply rounded-xl border border-ink/10 bg-ink/[0.025];
-  }
-}
-
-/* Dark stone texture behind the hero and the pre-order block. */
-.texture {
-  background-color: var(--background);
-  background-image:
-    radial-gradient(ellipse 80% 55% at 50% 0%, rgb(201 138 92 / 0.12), transparent 70%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 @keyframes marquee {

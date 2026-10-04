@@ -1,7 +1,7 @@
 import { products, ingredientsInci, oilBenefits, oilDescription, productDetails, BOTTLE_SIZE } from "@/lib/products";
 import { siteConfig, shipStatus } from "@/lib/site-config";
 import { formatPrice } from "@/lib/format";
-import { PRODUCT_PATH, siteDescription } from "@/lib/seo";
+import { productPath, siteDescription } from "@/lib/seo";
 import { faqs } from "@/lib/faqs";
 
 // /llms.txt — a plain markdown summary of the shop for AI assistants and
@@ -24,7 +24,7 @@ function buildLlmsTxt() {
       p.savingCents > 0
         ? ` Saves ${formatPrice(p.savingCents)} compared with ${p.bottles} single bottles.`
         : "";
-    return `- ${p.name} (${p.scent}): ${formatPrice(p.priceCents)}, ${perBottle} per bottle.${saving}`;
+    return `- [${p.name}](${url(productPath(p))}) (${p.scent}): ${formatPrice(p.priceCents)}, ${perBottle} per bottle.${saving}`;
   });
 
   const socials = [
@@ -42,11 +42,11 @@ It is at the very start. Its first and only product is a beard oil, currently av
 
 ## The first product: beard oil
 
-[${siteConfig.brandName} Beard Oil](${url(PRODUCT_PATH)}) — ${BOTTLE_SIZE} dropper bottle, around two months of daily use.
+${siteConfig.brandName} Beard Oil — ${BOTTLE_SIZE} dropper bottle, around two months of daily use. [Shop the packs](${url("/#shop")}).
 
 ${oilDescription}
 
-${oilBenefits.map((b) => `- **${b.title}.** ${b.body}`).join("\n")}
+${oilBenefits.map((b) => `- ${b}`).join("\n")}
 ${productDetails.map((d) => `- ${d.label}: ${d.value}`).join("\n")}
 
 Packs (every pack is the same oil):

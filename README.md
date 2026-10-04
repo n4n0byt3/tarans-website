@@ -70,26 +70,20 @@ single-bottle price, so they're always genuine.
 | File | What it is |
 | --- | --- |
 | `public/brand/logo.png` | The AZAD BLACK wordmark on a transparent background — nav, footer, pop-up, share image |
-| `public/products/bottle.png` | The labelled bottle — hero, product section, product page |
 | `src/app/apple-icon.png` | The square logo, used when someone saves the site to their phone's home screen |
 
-The logo is cut from the full-size logo artwork. The bottle photo is still a
-small (187px wide) copy, which is why it's shown at modest sizes — swap in a
-full-resolution version under the same file name and update `BOTTLE_IMAGE` in
-`src/lib/products.js` to its new width and height. After
-changing the logo, run `node scripts/og-image.mjs` to rebuild the share image.
-
-The look itself — the copper accent, the button, the section headings — is
-defined once at the top of `src/app/globals.css` (`.eyebrow`, `.heading`,
-`.btn`, `.card`), so restyling there changes every page.
+After changing the logo, run `node scripts/og-image.mjs` to rebuild the share
+image.
 
 **`src/lib/faqs.js`**: the FAQ. The same answers also feed Google and
 `/llms.txt`.
 
 ### Pages
 
-- `/` — problem → idea → beard oil → ritual → why AZAD BLACK → pre-order → FAQ → join the list
-- `/beard-oil` — the full product page with the pack picker
+- `/` — hero → our story → badges → the three packs (pre-order) → FAQ
+- `/products/one-bottle`, `/products/two-bottles`, `/products/three-bottles` —
+  a page per pack
+- `/beard-oil` — no longer a page; redirects to the packs on the homepage
 - `/shipping`, `/returns`, `/terms`, `/privacy` — the legal pages
 - `/admin` — orders, the ship-date email, and the sign-up export
 - `/llms.txt` — a plain summary of the shop for AI assistants
@@ -97,7 +91,7 @@ defined once at the top of `src/app/globals.css` (`.eyebrow`, `.heading`,
 ### The discount pop-up
 
 Shows once, 6 seconds after someone lands (or a third of the way down the
-page), only on the homepage and product page. Close it and it stays away for a
+page), only on the homepage and the pack pages. Close it and it stays away for a
 week. On a phone it slides up from the bottom rather than covering the page.
 
 Entering an email gives that person their **own** Stripe code: 10% off, single
@@ -108,8 +102,8 @@ and can be typed in at checkout on any other device.
 
 ### What happens when someone pre-orders
 
-1. They pick a pack and click **Pre-order**, then **Pre-order securely** in the
-   basket. Their discount is applied if they unlocked one.
+1. They click **Pre-order** on one of the three packs, then **Pre-order
+   securely** in the basket. Their discount is applied if they unlocked one.
 2. They pay on Stripe's secure page, which shows the pre-order terms next to
    the pay button. Card details never touch this site.
 3. Stripe notifies `/api/webhooks/stripe`, which emails the customer a

@@ -35,9 +35,9 @@ export default function AddToCartForm({ product }) {
       <button
         type="button"
         onClick={() => addItem(product, qty)}
-        className="btn flex-1"
+        className="flex-1 bg-ink text-cream rounded-full py-3 font-semibold transition-all duration-200 hover:opacity-85 active:scale-95"
       >
-        Add to basket
+        Pre-order
       </button>
     </div>
   );

@@ -15,9 +15,12 @@ import {
 import ScratchCard from "./ScratchCard";
 import Logo from "./Logo";
 
-// Pages where the offer may open by itself. Everywhere else it only opens
-// when someone asks for it (the "unlock 10%" link in the basket).
-const AUTO_OPEN_PATHS = new Set(["/", "/beard-oil"]);
+// Pages where the offer may open by itself: the homepage and the pack
+// pages. Everywhere else it only opens when someone asks for it (the
+// "get 10% off" link in the basket).
+function canAutoOpen(pathname) {
+  return pathname === "/" || pathname.startsWith("/products/");
+}
 const OPEN_AFTER_MS = 6000;
 const OPEN_AFTER_SCROLL = 0.35;
 const SHOWN_THIS_SESSION = "first-drop-offer-shown";
@@ -29,7 +32,7 @@ function useAutoOpen() {
   const { offer } = useOfferState();
 
   useEffect(() => {
-    if (!AUTO_OPEN_PATHS.has(pathname) || offer || recentlyDismissed()) return;
+    if (!canAutoOpen(pathname) || offer || recentlyDismissed()) return;
     try {
       if (sessionStorage.getItem(SHOWN_THIS_SESSION)) return;
     } catch {
@@ -125,7 +128,8 @@ function OfferDialog() {
     }
   }
 
-  const preorderHref = pathname === "/beard-oil" ? "/beard-oil#first-drop" : "/#first-drop";
+  // On a pack page, closing the pop-up already leaves them at the button.
+  const preorderHref = pathname.startsWith("/products/") ? pathname : "/#shop";
 
   return (
     <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center sm:p-5">
@@ -140,7 +144,7 @@ function OfferDialog() {
         aria-modal="true"
         aria-labelledby="offer-title"
         tabIndex={-1}
-        className="relative w-full sm:max-w-md max-h-[92vh] overflow-y-auto bg-navy border border-ink/10 rounded-t-2xl sm:rounded-2xl px-6 pt-12 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-8 shadow-2xl focus:outline-none animate-[sheet-up_0.3s_ease] sm:animate-fade-in-up motion-reduce:animate-none"
+        className="relative w-full sm:max-w-md max-h-[92vh] overflow-y-auto bg-navy border border-ink/10 rounded-t-3xl sm:rounded-3xl px-6 pt-12 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-8 shadow-2xl focus:outline-none animate-[sheet-up_0.3s_ease] sm:animate-fade-in-up motion-reduce:animate-none"
       >
         <button
           type="button"
@@ -154,10 +158,10 @@ function OfferDialog() {
         {step === "form" && (
           <>
             <Logo className="h-7 mb-6" />
-            <p className="eyebrow">
+            <p className="text-teal text-xs font-semibold uppercase tracking-widest">
               Your first {siteConfig.brandName} drop
             </p>
-            <h2 id="offer-title" className="text-2xl font-bold tracking-tight mt-3">
+            <h2 id="offer-title" className="text-2xl font-bold mt-2">
               Unlock a discount on the first drop
             </h2>
             <p className="text-ink/70 mt-3">
@@ -176,7 +180,7 @@ function OfferDialog() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="w-full bg-cream border border-ink/15 rounded-lg px-4 py-3.5 text-base text-ink placeholder:text-ink/40 focus:outline-none focus:border-teal"
+                  className="w-full bg-cream border border-ink/20 rounded-full px-5 py-3.5 text-base text-ink placeholder:text-ink/40 focus:outline-none focus:border-teal"
                 />
               </label>
               {/* Honeypot for bots: hidden from people and screen readers. */}
@@ -193,7 +197,7 @@ function OfferDialog() {
               <button
                 type="submit"
                 disabled={pending}
-                className="btn w-full"
+                className="w-full bg-ink text-cream rounded-full py-3.5 font-semibold uppercase tracking-wide text-sm transition-all duration-200 hover:opacity-85 active:scale-95 disabled:opacity-50"
               >
                 {pending ? "Unlocking…" : "Reveal my discount"}
               </button>
@@ -222,10 +226,10 @@ function OfferDialog() {
 
         {(step === "scratch" || step === "revealed") && offer && (
           <>
-            <p className="eyebrow">
+            <p className="text-teal text-xs font-semibold uppercase tracking-widest">
               {step === "scratch" ? "Scratch to reveal your offer" : "Unlocked"}
             </p>
-            <h2 id="offer-title" className="text-2xl font-bold tracking-tight mt-3 mb-5">
+            <h2 id="offer-title" className="text-2xl font-bold mt-2 mb-5">
               {step === "scratch"
                 ? "Here's what you've got"
                 : `Your ${offer.percentOff}% discount has been unlocked`}
@@ -236,7 +240,7 @@ function OfferDialog() {
                 <OfferFace offer={offer} />
               </ScratchCard>
             ) : (
-              <div className="h-36 rounded-xl border border-teal/40 bg-navy flex flex-col items-center justify-center text-center p-4">
+              <div className="h-36 rounded-2xl border border-teal/40 bg-navy flex flex-col items-center justify-center text-center p-4">
                 <OfferFace offer={offer} />
               </div>
             )}
@@ -248,7 +252,7 @@ function OfferDialog() {
                   automatically at checkout on this device
                   {timeLeft && timeLeft !== "expired" ? ` — ${timeLeft}.` : "."}
                 </p>
-                <div className="flex items-center justify-between gap-3 border border-ink/15 rounded-lg pl-4 pr-1.5 py-1.5">
+                <div className="flex items-center justify-between gap-3 border border-ink/15 rounded-full pl-5 pr-1.5 py-1.5">
                   <span className="text-sm">
                     <span className="text-ink/50">Code </span>
                     <span className="font-semibold tracking-wider">{offer.code}</span>
@@ -256,7 +260,7 @@ function OfferDialog() {
                   <button
                     type="button"
                     onClick={copyCode}
-                    className="text-xs font-semibold border border-ink/20 rounded-md px-3 py-1.5 hover:border-ink/50 transition-colors"
+                    className="text-xs font-semibold border border-ink/20 rounded-full px-3 py-1.5 hover:border-ink/50 transition-colors"
                   >
                     {copied ? "Copied" : "Copy"}
                   </button>
@@ -267,7 +271,7 @@ function OfferDialog() {
                 <Link
                   href={preorderHref}
                   onClick={closeOfferModal}
-                  className="btn w-full"
+                  className="block w-full text-center bg-ink text-cream rounded-full py-3.5 font-semibold uppercase tracking-wide text-sm transition-all duration-200 hover:opacity-85 active:scale-95"
                 >
                   Pre-order the first drop
                 </Link>

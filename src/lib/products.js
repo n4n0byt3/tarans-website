@@ -1,3 +1,6 @@
+import { siteConfig } from "./site-config";
+import { formatPrice } from "./format";
+
 // Private-label beard oil from Guangzhou Biying Cosmetics Co., Ltd. (their
 // own brand is MOOYAM), relabelled as AZAD BLACK in a 30ml dropper bottle.
 // Listed at £0.31-0.37/unit before customisation and shipping, MOQ 3.
@@ -27,37 +30,14 @@ export const productDetails = [
 export const oilDescription =
   "A lightweight, fast-absorbing beard oil that softens coarse hair and calms the itch and flakiness of growing out a beard.";
 
-// What the oil does, stated as a cosmetic can honestly state it. These follow
-// the brand's product graphic, with the wording pulled back where it went
-// further than a cosmetic can: nothing about follicles, roots or a "fuller"
-// beard, which reads as a growth claim and makes a product a medicine. The
+// What the oil does, stated as a cosmetic can honestly state it. The
 // supplier's own listing calls it a "growth oil"; this deliberately doesn't.
 export const oilBenefits = [
-  {
-    title: "Moisturises",
-    body: "A blend of oils that keeps your beard, and the skin under it, from drying out.",
-  },
-  {
-    title: "Reduces dryness",
-    body: "Helps stop the flaking and keeps your beard soft and manageable.",
-  },
-  {
-    title: "Tames frizz",
-    body: "A smoother finish for a neater-looking beard — and less itch.",
-  },
-  {
-    title: "Adds natural shine",
-    body: "A light, healthy-looking shine. No hold, no stiffness, no grease.",
-  },
-  {
-    title: "Subtle scent",
-    body: "Fresh and natural. Noticeable up close, not across the room.",
-  },
+  "Softens coarse, wiry hair",
+  "Calms the itch and the flakes underneath",
+  "A light shine — no hold, no stiffness",
+  "Fresh, natural scent",
 ];
-
-// The labelled bottle — the photo to use wherever the product itself is the
-// subject. The pack photos below are unlabelled.
-export const BOTTLE_IMAGE = { src: "/products/bottle.png", width: 187, height: 353 };
 
 // The one place the bottle size is set — every label, title and supply
 // estimate on the site reads it from here.
@@ -71,7 +51,19 @@ const SINGLE_BOTTLE_CENTS = 1399;
 // single-bottle price rather than typed in, and can't drift from it.
 function packPricing(bottles, priceCents) {
   const compareAtCents = bottles * SINGLE_BOTTLE_CENTS;
-  return { compareAtCents, savingCents: compareAtCents - priceCents };
+  return {
+    compareAtCents,
+    discountPercent: Math.floor(((compareAtCents - priceCents) / compareAtCents) * 100),
+    savingCents: compareAtCents - priceCents,
+  };
+}
+
+// Kept in step with checkout: no single pack clears the free-delivery
+// threshold on its own, so none of them can promise free delivery outright.
+function deliveryBullet(priceCents) {
+  return priceCents >= siteConfig.freeShippingThresholdCents
+    ? "Free UK delivery"
+    : `Free UK delivery over ${formatPrice(siteConfig.freeShippingThresholdCents)}`;
 }
 
 // The packs. Every one is the same oil; only the number of bottles differs.
@@ -84,6 +76,14 @@ export const products = [
     scent: `${BOTTLE_SIZE} beard oil`,
     priceCents: SINGLE_BOTTLE_CENTS,
     image: "/products/qty-1.png",
+    description:
+      "Your first bottle. Lightweight, fast-absorbing oil that softens coarse hair and calms the itch and flakiness of the first few weeks of growing out.",
+    bullets: [
+      `${BOTTLE_SIZE} — lasts around 2 months`,
+      "Non-greasy, fast-absorbing",
+      "Softens & tames flyaways",
+      deliveryBullet(SINGLE_BOTTLE_CENTS),
+    ],
   },
   {
     slug: "two-bottles",
@@ -93,6 +93,14 @@ export const products = [
     priceCents: 2299,
     ...packPricing(2, 2299),
     image: "/products/qty-2.png",
+    description:
+      "Stock up and never run out. Two bottles at a lower price per bottle than buying one at a time.",
+    bullets: [
+      `2 x ${BOTTLE_SIZE} — around 4 months' supply`,
+      "Lower price per bottle",
+      "Non-greasy, fast-absorbing",
+      deliveryBullet(2299),
+    ],
   },
   {
     slug: "three-bottles",
@@ -103,6 +111,14 @@ export const products = [
     ...packPricing(3, 3199),
     image: "/products/qty-3.png",
     isBestValue: true,
+    description:
+      "Our best value pack. Around six months' supply for you, or share the extras — the best way to buy.",
+    bullets: [
+      `3 x ${BOTTLE_SIZE} — around 6 months' supply`,
+      "Best price per bottle",
+      "Great gift option",
+      deliveryBullet(3199),
+    ],
   },
 ];
 

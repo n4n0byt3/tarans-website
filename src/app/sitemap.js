@@ -1,6 +1,6 @@
 import { products } from "@/lib/products";
 import { siteConfig } from "@/lib/site-config";
-import { PRODUCT_PATH } from "@/lib/seo";
+import { productPath } from "@/lib/seo";
 
 export default function sitemap() {
   const lastModified = new Date();
@@ -14,13 +14,13 @@ export default function sitemap() {
       priority: 1,
       images: [absolute("/hero.png"), absolute("/about/founder.png")],
     },
-    {
-      url: absolute(PRODUCT_PATH),
+    ...products.map((product) => ({
+      url: absolute(productPath(product)),
       lastModified,
       changeFrequency: "weekly",
-      priority: 0.9,
-      images: products.map((p) => absolute(p.image)),
-    },
+      priority: 0.8,
+      images: [absolute(product.image)],
+    })),
     ...["/shipping", "/returns", "/terms", "/privacy"].map((path) => ({
       url: absolute(path),
       lastModified,
