@@ -1,17 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
-  // For a while the three pack pages were merged into a single /beard-oil
-  // page, and old /products/... links were permanently redirected there.
-  // Browsers cache permanent redirects, so /beard-oil has to keep working:
-  // it now sends people to the packs on the homepage. Temporary, so it can
-  // be reused later.
+  // The three pack pages (/products/one-bottle etc.) became options on one
+  // product page. Old links go there. Limited to the old slugs on purpose:
+  // redirects run before /public is served, and the product photos live
+  // under /products/ too.
   redirects() {
     return [
       {
-        source: "/beard-oil",
-        destination: "/#shop",
-        permanent: false,
+        source: "/products/:slug(one-bottle|two-bottles|three-bottles)",
+        destination: "/beard-oil",
+        permanent: true,
       },
     ];
   },

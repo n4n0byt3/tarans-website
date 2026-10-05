@@ -71,6 +71,13 @@ single-bottle price, so they're always genuine.
 | --- | --- |
 | `public/brand/logo.png` | The AZAD BLACK wordmark on a transparent background — nav, footer, pop-up, share image |
 | `src/app/apple-icon.png` | The square logo, used when someone saves the site to their phone's home screen |
+| `public/products/beard-oil.png` | The labelled bottle — homepage card and first product photo |
+| `public/products/qty-1/2/3.png` | One photo per pack, shown when that pack is picked |
+| `public/products/feature-*.png` | The three small tiles under the product photos |
+
+The labelled bottle and the feature tiles are cut from the brand's product
+mock-up, so the tiles are small (about 90px). Replace any of them with a
+real photo under the same file name.
 
 After changing the logo, run `node scripts/og-image.mjs` to rebuild the share
 image.
@@ -80,10 +87,10 @@ image.
 
 ### Pages
 
-- `/` — hero → our story → badges → the three packs (pre-order) → FAQ
-- `/products/one-bottle`, `/products/two-bottles`, `/products/three-bottles` —
-  a page per pack
-- `/beard-oil` — no longer a page; redirects to the packs on the homepage
+- `/` — hero → our story → badges → the beard oil (pre-order) → FAQ
+- `/beard-oil` — the product page: photos, the 1/2/3-bottle options,
+  pre-order button, and product details. Old `/products/...` links redirect
+  here
 - `/shipping`, `/returns`, `/terms`, `/privacy` — the legal pages
 - `/admin` — orders, the ship-date email, and the sign-up export
 - `/llms.txt` — a plain summary of the shop for AI assistants
@@ -91,7 +98,7 @@ image.
 ### The discount pop-up
 
 Shows once, 6 seconds after someone lands (or a third of the way down the
-page), only on the homepage and the pack pages. Close it and it stays away for a
+page), only on the homepage and the product page. Close it and it stays away for a
 week. On a phone it slides up from the bottom rather than covering the page.
 
 Entering an email gives that person their **own** Stripe code: 10% off, single
@@ -102,8 +109,8 @@ and can be typed in at checkout on any other device.
 
 ### What happens when someone pre-orders
 
-1. They click **Pre-order** on one of the three packs, then **Pre-order
-   securely** in the basket. Their discount is applied if they unlocked one.
+1. They open the beard oil, choose 1, 2 or 3 bottles and click **Pre-order**,
+   then **Pre-order securely** in the basket. Their discount is applied if they unlocked one.
 2. They pay on Stripe's secure page, which shows the pre-order terms next to
    the pay button. Card details never touch this site.
 3. Stripe notifies `/api/webhooks/stripe`, which emails the customer a

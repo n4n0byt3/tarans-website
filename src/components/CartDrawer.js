@@ -130,7 +130,7 @@ export default function CartDrawer() {
             <div className="text-sm">
               <p className="text-ink/60">Your basket is empty.</p>
               <Link
-                href="/#shop"
+                href="/beard-oil"
                 onClick={closeCart}
                 className="inline-block mt-3 text-teal hover:underline underline-offset-4"
               >

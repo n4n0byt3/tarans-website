@@ -3,7 +3,6 @@ import Hero from "@/components/Hero";
 import TrustBadges from "@/components/TrustBadges";
 import ProductCard from "@/components/ProductCard";
 import FAQAccordion from "@/components/FAQAccordion";
-import { products } from "@/lib/products";
 import { siteConfig, shipStatus } from "@/lib/site-config";
 import { jsonLd, organizationSchema, websiteSchema } from "@/lib/seo";
 
@@ -73,11 +72,7 @@ export default function Home() {
           <p className="text-center text-ink/60 text-sm mt-3 mb-10 max-w-xl mx-auto">
             {shipStatus()} Cancel any time before it ships for a full refund.
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
-            {products.map((p) => (
-              <ProductCard key={p.slug} product={p} />
-            ))}
-          </div>
+          <ProductCard />
         </div>
       </section>
 

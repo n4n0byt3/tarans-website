@@ -15,11 +15,11 @@ import {
 import ScratchCard from "./ScratchCard";
 import Logo from "./Logo";
 
-// Pages where the offer may open by itself: the homepage and the pack
-// pages. Everywhere else it only opens when someone asks for it (the
-// "get 10% off" link in the basket).
+// Pages where the offer may open by itself: the homepage and the product
+// page. Everywhere else it only opens when someone asks for it (the
+// "get 10% off" links on the product page and in the basket).
 function canAutoOpen(pathname) {
-  return pathname === "/" || pathname.startsWith("/products/");
+  return pathname === "/" || pathname === "/beard-oil";
 }
 const OPEN_AFTER_MS = 6000;
 const OPEN_AFTER_SCROLL = 0.35;
@@ -128,8 +128,8 @@ function OfferDialog() {
     }
   }
 
-  // On a pack page, closing the pop-up already leaves them at the button.
-  const preorderHref = pathname.startsWith("/products/") ? pathname : "/#shop";
+  // On the product page, closing the pop-up already leaves them at the button.
+  const preorderHref = "/beard-oil";
 
   return (
     <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center sm:p-5">

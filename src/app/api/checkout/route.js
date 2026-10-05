@@ -37,7 +37,7 @@ export async function POST(request) {
       price_data: {
         currency: siteConfig.currency,
         unit_amount: product.priceCents,
-        product_data: { name: `${siteConfig.brandName} — ${product.name}` },
+        product_data: { name: `${siteConfig.brandName} Beard Oil — ${product.name}` },
       },
     });
   }

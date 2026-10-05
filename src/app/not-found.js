@@ -16,7 +16,7 @@ export default function NotFound() {
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-3">
         <Link
-          href="/#shop"
+          href="/beard-oil"
           className="bg-ink text-cream rounded-full px-6 py-3 font-semibold transition-all duration-200 hover:opacity-85 active:scale-95"
         >
           See the beard oil

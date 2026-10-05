@@ -194,7 +194,7 @@ export async function sendOfferEmail({ to, code, percentOff, expiresAt }) {
           (UK time). On the device you signed up on it's applied automatically at checkout;
           anywhere else, enter the code at checkout.
         </p>
-        <a href="${escapeHtml(siteConfig.url)}/#shop" style="display:inline-block;background:#efe8e0;color:#16130f;padding:12px 24px;border-radius:999px;text-decoration:none;font-weight:bold;">Pre-order the first drop</a>
+        <a href="${escapeHtml(siteConfig.url)}/beard-oil" style="display:inline-block;background:#efe8e0;color:#16130f;padding:12px 24px;border-radius:999px;text-decoration:none;font-weight:bold;">Pre-order the first drop</a>
         <p style="margin:28px 0 0;font-size:12px;color:rgba(239,232,224,0.45);line-height:1.6;">
           You're getting this because you signed up at ${escapeHtml(siteConfig.url)}. We'll send the
           occasional update as we build the brand — reply "unsubscribe" and we'll take you off the list.

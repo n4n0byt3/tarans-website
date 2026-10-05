@@ -2,8 +2,7 @@ import Link from "next/link";
 import { siteConfig, shipStatus } from "@/lib/site-config";
 import { formatPrice } from "@/lib/format";
 
-// Shown at the two moments people hesitate — under Pre-order on a pack page
-// and above checkout in the basket — so the pre-order terms, delivery and
+// Shown above checkout in the basket, so the pre-order terms, delivery and
 // returns are a tap away right where the decision gets made.
 export default function PurchaseReassurance({ onNavigate, className = "" }) {
   const linkClass = "text-teal hover:underline";

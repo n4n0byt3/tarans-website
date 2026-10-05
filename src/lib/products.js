@@ -1,6 +1,3 @@
-import { siteConfig } from "./site-config";
-import { formatPrice } from "./format";
-
 // Private-label beard oil from Guangzhou Biying Cosmetics Co., Ltd. (their
 // own brand is MOOYAM), relabelled as AZAD BLACK in a 30ml dropper bottle.
 // Listed at £0.31-0.37/unit before customisation and shipping, MOQ 3.
@@ -43,6 +40,52 @@ export const oilBenefits = [
 // estimate on the site reads it from here.
 export const BOTTLE_SIZE = "30ml";
 
+// The product as the shop presents it: one beard oil, bought in packs of
+// one, two or three bottles.
+export const PRODUCT = {
+  name: "Beard Oil",
+  path: "/beard-oil",
+  // Labelled AZAD BLACK bottle, cut from the brand's product mock-up.
+  image: { src: "/products/beard-oil.png", width: 613, height: 603 },
+  // Three words under the name. No "grow": growth claims make a cosmetic a
+  // medicine in UK law.
+  keywords: ["Nourish", "Soften", "Shine"],
+};
+
+// The icon row on the product page. Each is one of oilBenefits, shortened.
+export const highlights = [
+  { icon: "drop", label: "Moisturises & softens" },
+  { icon: "shield", label: "Reduces dryness & itch" },
+  { icon: "feather", label: "Light & non-greasy" },
+  { icon: "leaf", label: "Fresh, natural scent" },
+];
+
+// The three tiles under the product photos. Deliberately nothing about
+// specific oils: the ingredient list isn't confirmed yet.
+export const features = [
+  {
+    image: "/products/feature-oil.png",
+    title: "Lightweight oil blend",
+    body: "Absorbs quickly, no oily residue.",
+  },
+  {
+    image: "/products/feature-dropper.png",
+    title: "A few drops a day",
+    body: "About thirty seconds, once a day.",
+  },
+  {
+    image: "/products/feature-texture.png",
+    title: "Softer, neater beard",
+    body: "Tames frizz and flyaways.",
+  },
+];
+
+export const howToUse = [
+  "Apply — a few drops into your palm. Rub your hands together.",
+  "Shape — work it through your beard, down to the skin. Fingers or a comb.",
+  "Go — that's it. About thirty seconds, once a day.",
+];
+
 const SINGLE_BOTTLE_CENTS = 1399;
 
 // A struck-through reference price has to be a genuine price or it's a
@@ -51,74 +94,42 @@ const SINGLE_BOTTLE_CENTS = 1399;
 // single-bottle price rather than typed in, and can't drift from it.
 function packPricing(bottles, priceCents) {
   const compareAtCents = bottles * SINGLE_BOTTLE_CENTS;
-  return {
-    compareAtCents,
-    discountPercent: Math.floor(((compareAtCents - priceCents) / compareAtCents) * 100),
-    savingCents: compareAtCents - priceCents,
-  };
+  return { compareAtCents, savingCents: compareAtCents - priceCents };
 }
 
-// Kept in step with checkout: no single pack clears the free-delivery
-// threshold on its own, so none of them can promise free delivery outright.
-function deliveryBullet(priceCents) {
-  return priceCents >= siteConfig.freeShippingThresholdCents
-    ? "Free UK delivery"
-    : `Free UK delivery over ${formatPrice(siteConfig.freeShippingThresholdCents)}`;
-}
-
-// The packs. Every one is the same oil; only the number of bottles differs.
-// `slug` is what the basket and checkout use to identify a pack.
+// The packs — the options on the product page. Every one is the same oil;
+// only the number of bottles differs. `slug` is what the basket and
+// checkout use to identify a pack. A bottle lasts around two months.
 export const products = [
   {
     slug: "one-bottle",
     name: "1 Bottle",
     bottles: 1,
     scent: `${BOTTLE_SIZE} beard oil`,
+    supply: "around 2 months",
     priceCents: SINGLE_BOTTLE_CENTS,
     image: "/products/qty-1.png",
-    description:
-      "Your first bottle. Lightweight, fast-absorbing oil that softens coarse hair and calms the itch and flakiness of the first few weeks of growing out.",
-    bullets: [
-      `${BOTTLE_SIZE} — lasts around 2 months`,
-      "Non-greasy, fast-absorbing",
-      "Softens & tames flyaways",
-      deliveryBullet(SINGLE_BOTTLE_CENTS),
-    ],
   },
   {
     slug: "two-bottles",
     name: "2 Bottles",
     bottles: 2,
     scent: `2 x ${BOTTLE_SIZE} beard oil`,
+    supply: "around 4 months",
     priceCents: 2299,
     ...packPricing(2, 2299),
     image: "/products/qty-2.png",
-    description:
-      "Stock up and never run out. Two bottles at a lower price per bottle than buying one at a time.",
-    bullets: [
-      `2 x ${BOTTLE_SIZE} — around 4 months' supply`,
-      "Lower price per bottle",
-      "Non-greasy, fast-absorbing",
-      deliveryBullet(2299),
-    ],
   },
   {
     slug: "three-bottles",
     name: "3 Bottles",
     bottles: 3,
     scent: `3 x ${BOTTLE_SIZE} beard oil`,
+    supply: "around 6 months",
     priceCents: 3199,
     ...packPricing(3, 3199),
     image: "/products/qty-3.png",
     isBestValue: true,
-    description:
-      "Our best value pack. Around six months' supply for you, or share the extras — the best way to buy.",
-    bullets: [
-      `3 x ${BOTTLE_SIZE} — around 6 months' supply`,
-      "Best price per bottle",
-      "Great gift option",
-      deliveryBullet(3199),
-    ],
   },
 ];
 
