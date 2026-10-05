@@ -1,5 +1,5 @@
 import { siteConfig } from "./site-config";
-import { products, oilDescription, PRODUCT, BOTTLE_SIZE } from "./products";
+import { products, gallery, oilDescription, PRODUCT, BOTTLE_SIZE } from "./products";
 import { formatPrice } from "./format";
 
 // Everything here describes the shop to machines — search engines through
@@ -78,7 +78,7 @@ export function productSchema() {
     name: `${siteConfig.brandName} Beard Oil`,
     description: oilDescription,
     category: "Health & Beauty > Personal Care > Shaving & Grooming > Beard Oil",
-    image: [absolute(PRODUCT.image.src), ...products.map((p) => absolute(p.image))],
+    image: gallery.map((g) => absolute(g.src)),
     brand: { "@type": "Brand", name: siteConfig.brandName },
     size: BOTTLE_SIZE,
     offers: products.map((p) => ({

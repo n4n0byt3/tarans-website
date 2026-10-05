@@ -72,7 +72,7 @@ single-bottle price, so they're always genuine.
 | `public/brand/logo.png` | The AZAD BLACK wordmark on a transparent background — nav, footer, pop-up, share image |
 | `src/app/apple-icon.png` | The square logo, used when someone saves the site to their phone's home screen |
 | `public/products/beard-oil.png` | The labelled bottle — homepage card and first product photo |
-| `public/products/qty-1/2/3.png` | One photo per pack, shown when that pack is picked |
+| `public/products/bottle-*.png` | The other product page photos, padded out to squares. The list and order is `gallery` in `src/lib/products.js` |
 | `public/products/feature-*.png` | The three small tiles under the product photos |
 
 The labelled bottle and the feature tiles are cut from the brand's product

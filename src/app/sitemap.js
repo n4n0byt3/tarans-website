@@ -1,4 +1,4 @@
-import { products, PRODUCT } from "@/lib/products";
+import { gallery, PRODUCT } from "@/lib/products";
 import { siteConfig } from "@/lib/site-config";
 
 export default function sitemap() {
@@ -18,7 +18,7 @@ export default function sitemap() {
       lastModified,
       changeFrequency: "weekly",
       priority: 0.9,
-      images: [absolute(PRODUCT.image.src), ...products.map((p) => absolute(p.image))],
+      images: gallery.map((g) => absolute(g.src)),
     },
     ...["/shipping", "/returns", "/terms", "/privacy"].map((path) => ({
       url: absolute(path),

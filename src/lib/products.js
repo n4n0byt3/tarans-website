@@ -52,6 +52,15 @@ export const PRODUCT = {
   keywords: ["Nourish", "Soften", "Shine"],
 };
 
+// The product page photos, in order. The first is the main one, also used on
+// the homepage card and when the page is shared.
+export const gallery = [
+  { src: PRODUCT.image.src, alt: "bottle on a stone, with rosemary and driftwood" },
+  { src: "/products/bottle-front.png", alt: "bottle, front label" },
+  { src: "/products/bottle-stone.png", alt: "bottle lying on a stone block" },
+  { src: "/products/bottle-dropper.png", alt: "oil dripping from the dropper into the bottle" },
+];
+
 // The icon row on the product page. Each is one of oilBenefits, shortened.
 export const highlights = [
   { icon: "drop", label: "Moisturises & softens" },
@@ -108,7 +117,6 @@ export const products = [
     scent: `${BOTTLE_SIZE} beard oil`,
     supply: "around 2 months",
     priceCents: SINGLE_BOTTLE_CENTS,
-    image: "/products/qty-1.png",
   },
   {
     slug: "two-bottles",
@@ -118,7 +126,6 @@ export const products = [
     supply: "around 4 months",
     priceCents: 2299,
     ...packPricing(2, 2299),
-    image: "/products/qty-2.png",
   },
   {
     slug: "three-bottles",
@@ -128,7 +135,6 @@ export const products = [
     supply: "around 6 months",
     priceCents: 3199,
     ...packPricing(3, 3199),
-    image: "/products/qty-3.png",
     isBestValue: true,
   },
 ];

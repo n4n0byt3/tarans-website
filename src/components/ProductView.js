@@ -6,6 +6,7 @@ import Link from "next/link";
 import {
   PRODUCT,
   products,
+  gallery as photos,
   highlights,
   features,
   howToUse,
@@ -21,12 +22,7 @@ import { openOfferModal, useOfferState, useTimeLeft } from "@/lib/offer-client";
 
 const brand = siteConfig.brandName;
 
-// The labelled bottle first, then a photo per pack. Picking a pack shows
-// its photo, so the gallery and the options stay in step.
-const gallery = [
-  { src: PRODUCT.image.src, alt: `${brand} beard oil, ${BOTTLE_SIZE} dropper bottle` },
-  ...products.map((p) => ({ src: p.image, alt: `${brand} beard oil, ${p.scent}`, slug: p.slug })),
-];
+const gallery = photos.map((g) => ({ src: g.src, alt: `${brand} beard oil — ${g.alt}` }));
 
 const iconPaths = {
   drop: <path d="M12 3.5s-6 6.6-6 11a6 6 0 0 0 12 0c0-4.4-6-11-6-11Z" />,
@@ -114,11 +110,6 @@ export default function ProductView() {
   const selected = products.find((p) => p.slug === slug);
   const image = gallery[imageIndex];
 
-  function choosePack(nextSlug) {
-    setSlug(nextSlug);
-    setImageIndex(gallery.findIndex((g) => g.slug === nextSlug));
-  }
-
   return (
     <div className="grid gap-8 lg:gap-x-14 lg:grid-cols-[1.1fr_1fr] lg:grid-rows-[auto_1fr] items-start">
       {/* Photos: thumbnails down the side on a big screen, underneath on a phone. */}
@@ -202,7 +193,7 @@ export default function ProductView() {
                     name="pack"
                     value={p.slug}
                     checked={checked}
-                    onChange={() => choosePack(p.slug)}
+                    onChange={() => setSlug(p.slug)}
                     className="sr-only"
                   />
                   <span
