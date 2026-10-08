@@ -11,7 +11,7 @@ export default function sitemap() {
       lastModified,
       changeFrequency: "weekly",
       priority: 1,
-      images: [absolute("/hero.png"), absolute("/about/founder.png")],
+      images: [absolute("/hero-bg.webp"), absolute("/about/founder.png")],
     },
     {
       url: absolute(PRODUCT.path),

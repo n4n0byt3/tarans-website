@@ -7,7 +7,11 @@ import sharp from "sharp";
 const W = 1200;
 const H = 630;
 
-const hero = await sharp("public/hero.png").resize({ height: H }).toBuffer();
+// The bottle-and-smoke half of the homepage hero.
+const hero = await sharp("public/hero-bg.webp")
+  .extract({ left: 980, top: 0, width: 987, height: 799 })
+  .resize({ height: H })
+  .toBuffer();
 const heroMeta = await sharp(hero).metadata();
 const logo = await sharp("public/brand/logo.png").resize({ height: 56 }).toBuffer();
 

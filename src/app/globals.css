@@ -17,6 +17,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-gilda);
   --color-ink: var(--color-ink);
   --color-navy: var(--color-navy);
   --color-peach: var(--color-peach);
@@ -99,5 +100,57 @@ html {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+}
+
+/* Homepage hero: soft copper smoke drifting over the photo. Two layers at
+   different speeds so the movement never visibly repeats. */
+.hero-smoke {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: blur(40px);
+}
+
+.hero-smoke-a {
+  background:
+    radial-gradient(ellipse 30% 22% at 72% 60%, rgb(201 138 92 / 0.18), transparent 70%),
+    radial-gradient(ellipse 26% 30% at 92% 30%, rgb(226 165 130 / 0.14), transparent 70%);
+  animation: smoke-drift-a 26s ease-in-out infinite alternate;
+}
+
+.hero-smoke-b {
+  background:
+    radial-gradient(ellipse 34% 18% at 55% 80%, rgb(180 150 120 / 0.12), transparent 70%),
+    radial-gradient(ellipse 20% 26% at 85% 75%, rgb(201 138 92 / 0.12), transparent 70%);
+  animation: smoke-drift-b 34s ease-in-out infinite alternate;
+}
+
+@keyframes smoke-drift-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: translate3d(-6%, -4%, 0) scale(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes smoke-drift-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.05);
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(5%, -6%, 0) scale(1);
+    opacity: 0.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-smoke {
+    animation: none;
   }
 }
